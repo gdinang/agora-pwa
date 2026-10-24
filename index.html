@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accès privé</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b1f3a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--text:#16202e;--muted:#667085;--line:#e3e7ee;--accent:#1d4ed8;--chip:#e8eefc;--warn:#b45309;--warnbg:#fef3c7}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#131c2e;--text:#e6ebf5;--muted:#93a0b8;--line:#22304a;--accent:#7aa2ff;--chip:#1b2a47;--warn:#fbbf24;--warnbg:#3a2e0a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+header{position:sticky;top:0;z-index:5;background:#0b1f3a;color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:10px}
+header h1{margin:0;font-size:20px;flex:1}
+header small{opacity:.7;font-weight:400;font-size:12px;margin-left:6px}
+button{font:inherit;cursor:pointer}
+#refresh{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:8px;padding:4px 10px}
+main{max-width:720px;margin:0 auto;padding:12px 14px 40px}
+#chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px}
+.chip{flex:none;background:var(--chip);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:14px}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:18px 2px 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--muted);margin-bottom:8px}
+.src{font-weight:600;color:var(--accent)}
+.tag{background:var(--chip);border-radius:6px;padding:1px 7px}
+.tag.warn{background:var(--warnbg);color:var(--warn)}
+.msg{white-space:normal;word-wrap:break-word;overflow-wrap:anywhere}
+.msg.clamp{max-height:11em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.more{background:none;border:0;color:var(--accent);padding:6px 0 0;font-weight:600}
+a{color:var(--accent)}
+#state{text-align:center;color:var(--muted);padding:30px 10px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 20px 30px}
+
+header .hb{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:8px;padding:4px 10px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px}
+.row input[type=password]{flex:1;min-width:180px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:600}
+.btn.sec{background:var(--chip);color:var(--text);border:1px solid var(--line)}
+.err{color:#dc2626;font-size:14px;min-height:1.2em}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0 12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpi b{display:block;font-size:22px}.kpi span{font-size:12px;color:var(--muted)}
+.alert{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px}
+.b{border-radius:6px;padding:1px 7px;font-size:12px;background:var(--chip)}
+.b.ok{background:#dcfce7;color:#166534}.b.warn{background:var(--warnbg);color:var(--warn)}.b.bad{background:#fee2e2;color:#991b1b}
+@media (prefers-color-scheme:dark){.b.ok{background:#12351f;color:#86efac}.b.bad{background:#3b1414;color:#fca5a5}}
+details.rep>summary{cursor:pointer;color:var(--accent);font-weight:600;margin-top:6px}
+details.rep h4{margin:14px 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13px;max-height:340px;overflow:auto;margin:4px 0}
+.chg{border-left:3px solid var(--accent);padding:2px 0 2px 8px;margin:6px 0;font-size:14px}
+.chg.no{border-color:#f59e0b}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0 12px}td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mono{font:12px ui-monospace,Menlo,monospace;color:var(--muted);overflow-wrap:anywhere}
+details.appr{margin:10px 0;padding:8px 10px;background:var(--bg);border:1px solid var(--line);border-radius:10px}
+details.appr>summary{cursor:pointer;color:var(--accent);font-weight:600}
+details.appr>div{margin-top:6px}
+.runlog{max-height:520px;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 0;margin:6px 0;font:12px/1.5 ui-monospace,Menlo,monospace}
+.runlog div{padding:0 8px;white-space:pre-wrap;overflow-wrap:anywhere}
+.runlog div.w{background:var(--warnbg);color:var(--warn)}
+.runlog div.h{font-weight:700;color:var(--accent)}
+/* Signalement d'erreur */
+.foot{display:flex;justify-content:flex-end;margin-top:10px}
+.sig{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:3px 12px;font-size:13px}
+.sig:hover,.sig:focus-visible{color:var(--accent);border-color:var(--accent)}
+details.rect{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted)}
+details.rect>summary{cursor:pointer;color:#15803d;font-weight:600}
+@media (prefers-color-scheme:dark){details.rect>summary{color:#86efac}}
+details.rect div{margin-top:4px}
+.sheet{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:rgba(8,14,26,.55);animation:sfade .15s}
+.sheet>div{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.25);animation:sup .22s ease-out}
+@media (min-width:640px){.sheet{align-items:center}.sheet>div{border-radius:20px}}
+@keyframes sup{from{transform:translateY(40px);opacity:0}}@keyframes sfade{from{opacity:0}}
+.shead{display:flex;align-items:center;gap:10px}.shead h3{flex:1;margin:0;font-size:18px}
+.x{background:none;border:0;color:var(--muted);font-size:22px;line-height:1;padding:4px 8px}
+.steps{display:flex;gap:6px;margin:10px 0 4px}.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}.steps i.on{background:var(--accent)}
+.stepl{font-size:12px;color:var(--muted);margin-bottom:12px}
+.types{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.type{text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:12px;color:var(--text);transition:border-color .1s,transform .1s}
+.type:hover,.type:focus-visible{border-color:var(--accent)}.type:active{transform:scale(.98)}
+.type .ic{display:block;font-size:22px;margin-bottom:4px}.type b{display:block}.type span{font-size:13px;color:var(--muted)}
+.pick{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-height:40vh;overflow:auto;line-height:1.7}
+.pick span{border-radius:4px;cursor:pointer;transition:background .1s}.pick span:hover{background:var(--chip)}.pick span.on{background:#fde68a;color:#111}
+.hint{font-size:13px;color:var(--muted);margin:0 0 8px}
+.quote{border-left:3px solid var(--accent);background:var(--chip);border-radius:0 10px 10px 0;padding:8px 10px;font-size:14px;margin:10px 0;overflow-wrap:anywhere}
+.quote.empty{border-color:var(--line);color:var(--muted)}
+.field{display:block;margin:12px 0}.field>span{display:block;font-size:13px;font-weight:600;margin-bottom:4px}.field>small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.field textarea,.field input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
+.field textarea{min-height:76px;resize:vertical}
+.acts{display:flex;justify-content:space-between;gap:8px;margin-top:16px}
+.btn:disabled{opacity:.45;cursor:default}
+.done{text-align:center;padding:10px 4px}.done .big{font-size:42px}
+.ev{font-size:14px;margin:4px 0}.ev b{font-weight:600}
+.done p{margin:6px 0}.done .row{justify-content:center;margin-top:14px}
+@media (max-width:480px){#mesBtn .lg{display:none}header small{display:none}}
+</style>
+</head>
+<body>
+<header><h1 id="brand">◆ Accès privé</h1><button id="mesBtn" class="hb" hidden aria-label="Mes signalements"></button><button id="adminBtn" class="hb" hidden>Admin</button><button id="refresh" aria-label="Actualiser">Actualiser</button></header>
+<main>
+<div id="pub"><div id="chips"></div><div id="list"></div><div id="state">Chargement…</div></div>
+<div id="mes" hidden></div>
+<div id="adm" hidden></div>
+</main>
+<footer>Résumés rédigés par IA à partir des sources citées. Pour les contenus audio ou vidéo, recoupez avec la source d'origine. Heures : Cameroun.</footer>
+<script>
+const TZ='Africa/Douala';
+const KIND={texte:['Article',0],audio:['Audio · à recouper',1],video:['Vidéo · à recouper',1],podcast:['Podcast',0],verset:['Louis Segond 1910',0]};
+let data=[],filter='all';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+function fmt(t){
+  let h=esc(t||'');
+  h=h.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">lien</a>');
+  h=h.replace(/\*([^*\n]+)\*/g,'<strong>$1</strong>');
+  h=h.replace(/(^|[\s(>])_([^_\n<]+)_(?=[\s.,;:!?)<]|$)/g,'$1<em>$2</em>');
+  return h.replace(/\n/g,'<br>');
+}
+function msg(t){
+  t=t||'';
+  const m=t.search(/\*Pour approfondir\*/i);
+  if(m<0)return fmt(t);
+  const after=t.slice(m).replace(/^\*Pour approfondir\*\s*/i,'');
+  const s=after.search(/\n\s*📎/);
+  const sec=s<0?after:after.slice(0,s),post=s<0?'':after.slice(s);
+  return fmt(t.slice(0,m).trimEnd())+'<details class="appr"><summary>Pour approfondir</summary><div>'+fmt(sec.trim())+'</div></details>'+(post?fmt(post.trim()):'');
+}
+const dayKey=d=>d.toLocaleDateString('fr-CA',{timeZone:TZ});
+function dayLabel(d){
+  const k=dayKey(d),now=new Date();
+  if(k===dayKey(now))return "Aujourd'hui";
+  if(k===dayKey(new Date(now-864e5)))return 'Hier';
+  return d.toLocaleDateString('fr-FR',{timeZone:TZ,weekday:'long',day:'numeric',month:'long'});
+}
+const hhmm=d=>d.toLocaleTimeString('fr-FR',{timeZone:TZ,hour:'2-digit',minute:'2-digit'});
+function chips(){
+  const srcs=[...new Set(data.map(e=>e.source))];
+  $('chips').innerHTML='';
+  [['all','Tout'],...srcs.map(s=>[s,s])].forEach(([v,l])=>{
+    const b=document.createElement('button');
+    b.className='chip'+(filter===v?' on':'');b.textContent=l;
+    b.onclick=()=>{filter=v;render()};
+    $('chips').appendChild(b);
+  });
+}
+function render(){
+  chips();
+  const items=data.filter(e=>filter==='all'||e.source===filter);
+  const list=$('list');list.innerHTML='';
+  $('state').textContent=items.length?'':'Aucun résumé pour le moment.';
+  let last='';
+  items.forEach(e=>{
+    const d=new Date(e.published_at),lab=dayLabel(d);
+    if(lab!==last){const h=document.createElement('h2');h.textContent=lab;list.appendChild(h);last=lab}
+    const k=KIND[e.kind]||KIND.texte;
+    const c=document.createElement('article');c.className='card';
+    c.innerHTML='<div class="meta"><span class="src">'+esc(e.source)+'</span><span>'+hhmm(d)+'</span><span class="tag'+(k[1]?' warn':'')+'">'+k[0]+'</span></div><div class="msg">'+msg(e.message)+'</div>';
+    const m=c.querySelector('.msg');
+    if((e.message||'').length>650){
+      m.classList.add('clamp');
+      const b=document.createElement('button');b.className='more';b.textContent='Lire la suite';
+      b.onclick=()=>{const o=m.classList.toggle('clamp');b.textContent=o?'Lire la suite':'Réduire'};
+      c.appendChild(b);
+    }
+    if((e.rectifications||[]).length)c.insertAdjacentHTML('beforeend',rectBox(e.rectifications));
+    // Pas de signalement sur le verset du jour : le texte biblique n'est jamais modifié.
+    if(TEAM&&e.kind!=='verset'){
+      const f=document.createElement('div');f.className='foot';
+      const s=document.createElement('button');s.className='sig';s.textContent='⚑ Signaler une erreur';s.onclick=()=>sigOpen(e);
+      f.appendChild(s);c.appendChild(f);
+    }
+    list.appendChild(c);
+  });
+}
+let VPW=null;
+function brand(on){
+  $('brand').innerHTML=on?"◆ Agora<small>l'actualité en bref</small>":'◆ Accès privé';
+  document.title=on?"Agora, l'actualité en bref":'Accès privé';
+}
+function viewerLock(msg){
+  brand(false);$('chips').innerHTML='';$('list').innerHTML='';
+  $('state').innerHTML='<div style="max-width:320px;margin:24px auto;text-align:left"><p>Accès réservé.</p><div class="row"><input id="vpw" type="password" placeholder="Mot de passe" autocomplete="current-password"><button class="btn" id="vgo">Entrer</button></div><label><input type="checkbox" id="vrem" checked> Se souvenir sur cet appareil</label><div class="err">'+esc(msg||'')+'</div></div>';
+  $('vgo').onclick=()=>{VPW=$('vpw').value;if(!VPW)return;if($('vrem').checked)localStorage.setItem('agora_vpw',VPW);$('state').textContent='Déchiffrement…';load()};
+  $('vpw').onkeydown=e=>{if(e.key==='Enter')$('vgo').click()};
+}
+async function load(){
+  try{
+    let r=await fetch('summaries.enc.json?t='+Date.now(),{cache:'no-store'});
+    if(r.ok){
+      if(!VPW)VPW=localStorage.getItem('agora_vpw');
+      if(!VPW){viewerLock();return}
+      try{data=await decrypt(await r.json(),VPW)}
+      catch(e){VPW=null;localStorage.removeItem('agora_vpw');viewerLock('Mot de passe incorrect.');return}
+      await loadTeam();
+    }else{
+      r=await fetch('summaries.json?t='+Date.now(),{cache:'no-store'});
+      if(!r.ok)throw 0;
+      data=await r.json();
+    }
+    if(!Array.isArray(data))data=[];
+    brand(true);render();mesBtn();if(inMes)mesRender();
+  }catch(e){
+    $('state').textContent=data.length?'Hors ligne : affichage des derniers résumés connus.':'Impossible de charger les résumés. Vérifiez votre connexion.';
+  }
+}
+/* ================= SIGNALEMENT D'ERREUR (équipe) =================
+   3 gestes : type d'erreur, passage concerné, correction proposée.
+   Le signalement devient une « issue » GitHub du dépôt du pipeline, vérifiée
+   automatiquement par le workflow signalement.yml. */
+let TEAM=null,SG=null;
+async function loadTeam(){
+  // Jeton limité aux issues, chiffré avec le mot de passe lecteur (absent = bouton masqué).
+  try{const r=await fetch('team.enc.json?t='+Date.now(),{cache:'no-store'});TEAM=r.ok?await decrypt(await r.json(),VPW):null}catch(e){TEAM=null}
+}
+const dlong=iso=>{const d=new Date(iso);return d.toLocaleDateString('fr-FR',{timeZone:TZ,day:'numeric',month:'long',year:'numeric'})+' à '+hhmm(d).replace(':','h')};
+function rectBox(R){
+  const last=R[R.length-1];
+  return '<details class="rect"><summary>✓ Rectifié le '+esc(dlong(last.date))+'</summary>'+R.map(r=>'<div>« '+esc(r.avant)+' » devient « '+esc(r.apres)+' ». '+(r.methode==='auto'?'Correction suggérée par un lecteur, vérifiée automatiquement.':'Correction suggérée par un lecteur, validée par l\'équipe.')+'</div>').join('')+'</details>';
+}
+const SGT=[['nom','👤','Un nom','Personne, lieu ou institution mal orthographié'],['fait','📌','Un fait','Chiffre, fonction ou événement inexact'],['date','📅','Une date','Jour, heure ou moment erroné'],['autre','✏️','Autre chose','Formulation trompeuse, oubli…']];
+const plain=t=>String(t||'').replace(/https?:\/\/\S+/g,'').replace(/[*_~]/g,'').replace(/[ \t]+/g,' ');
+const sentences=l=>(l.match(/[^.!?…]+[.!?…]*["»)]*\s*/g)||[]).map(s=>s.trim()).filter(s=>s.length>1);
+function sigOpen(e){SG={e,step:1,type:'',passage:'',prop:'',url:'',who:localStorage.getItem('agora_nom')||'',err:'',busy:false};document.body.style.overflow='hidden';sigDraw()}
+function sigClose(){SG=null;const s=$('sheet');if(s)s.remove();document.body.style.overflow=''}
+function sigDraw(){
+  let s=$('sheet');
+  if(!s){s=document.createElement('div');s.id='sheet';s.className='sheet';s.setAttribute('role','dialog');s.setAttribute('aria-modal','true');s.onclick=ev=>{if(ev.target===s)sigClose()};document.body.appendChild(s)}
+  const T=SGT.find(t=>t[0]===SG.type),labels=['Quel type d\'erreur ?','Quel passage ?','Quelle correction ?'];
+  let h='<div><div class="shead"><h3>'+(SG.step>3?'Merci !':'Signaler une erreur')+'</h3><button class="x" id="sg_x" aria-label="Fermer">×</button></div>';
+  if(SG.step<=3)h+='<div class="steps">'+[1,2,3].map(i=>'<i class="'+(i<=SG.step?'on':'')+'"></i>').join('')+'</div><div class="stepl">Étape '+SG.step+' sur 3 · '+labels[SG.step-1]+' · '+esc(SG.e.source)+'</div>';
+  if(SG.step===1){
+    h+='<div class="types">'+SGT.map(t=>'<button class="type" data-t="'+t[0]+'"><span class="ic">'+t[1]+'</span><b>'+t[2]+'</b><span>'+t[3]+'</span></button>').join('')+'</div>';
+  }else if(SG.step===2){
+    const lines=plain(SG.e.message).split('\n').map(l=>l.trim()).filter(Boolean);
+    let i=0;
+    h+='<p class="hint">Touchez la phrase concernée, ou sélectionnez seulement quelques mots avec le doigt.</p><div class="pick" id="sg_pick">'+lines.map(l=>sentences(l).map(x=>'<span data-i="'+(i++)+'">'+esc(x)+'</span>').join(' ')).join('<br>')+'</div>'
+      +'<div class="quote'+(SG.passage?'':' empty')+'" id="sg_q">'+(SG.passage?'« '+esc(SG.passage)+' »':'Aucun passage choisi pour le moment.')+'</div>'
+      +'<div class="acts"><button class="btn sec" id="sg_back">Retour</button><button class="btn" id="sg_next"'+(SG.passage?'':' disabled')+'>Continuer</button></div>';
+  }else if(SG.step===3){
+    h+='<div class="quote">« '+esc(SG.passage)+' »</div>'
+      +'<label class="field"><span>'+(SG.type==='nom'?'Orthographe exacte':'Ce qu\'il faudrait écrire à la place')+'</span><textarea id="sg_prop" maxlength="600">'+esc(SG.prop||SG.passage)+'</textarea><small>Modifiez seulement ce qui est faux : ce texte remplacera le passage ci-dessus.</small></label>'
+      +'<label class="field"><span>Source (facultatif)</span><input id="sg_url" type="url" inputmode="url" placeholder="https://… article ou page officielle" value="'+esc(SG.url)+'"><small>Un lien qui prouve la correction accélère la vérification.</small></label>'
+      +'<label class="field"><span>Votre prénom (facultatif)</span><input id="sg_who" maxlength="60" value="'+esc(SG.who)+'"></label>'
+      +'<div class="err">'+esc(SG.err)+'</div>'
+      +'<div class="acts"><button class="btn sec" id="sg_back">Retour</button><button class="btn" id="sg_send"'+(SG.busy?' disabled':'')+'>'+(SG.busy?'Envoi…':'Envoyer le signalement')+'</button></div>';
+  }else{
+    h+='<div class="done"><div class="big">✓</div><p><b>Signalement n° '+esc(SG.num)+' enregistré</b></p><p>Merci de contribuer à la fiabilité d\'Agora.</p><p class="hint">Votre signalement est d\'abord vérifié automatiquement, puis par l\'équipe si nécessaire. Si l\'erreur est confirmée, la fiche sera rectifiée avec la mention « Rectifié le… ».</p><p class="hint">Suivez son traitement dans « Mes signalements ».</p><div class="row"><button class="btn sec" id="sg_mes">Mes signalements</button><button class="btn" id="sg_ok">Fermer</button></div></div>';
+  }
+  s.innerHTML=h+'</div>';
+  const on=(id,f)=>{const el=$(id);if(el)el.onclick=f};
+  on('sg_x',sigClose);on('sg_ok',sigClose);on('sg_mes',()=>{sigClose();showMes(true)});
+  on('sg_back',()=>{if(SG.step===3)sigKeep();SG.step--;SG.err='';sigDraw()});
+  on('sg_next',()=>{if(SG.passage){SG.step=3;sigDraw()}});
+  on('sg_send',sigSend);
+  s.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{SG.type=b.dataset.t;SG.step=2;sigDraw()});
+  s.querySelectorAll('#sg_pick span').forEach(sp=>{
+    if(sp.textContent===SG.passage)sp.classList.add('on');
+    sp.onclick=()=>{const sel=getSelection();if(sel&&!sel.isCollapsed)return;s.querySelectorAll('#sg_pick span.on').forEach(x=>x.classList.remove('on'));sp.classList.add('on');sigPick(sp.textContent)};
+  });
+  const first=s.querySelector('.type,#sg_prop,#sg_ok');if(first)first.focus();
+}
+function sigPick(t){
+  t=t.replace(/\s+/g,' ').trim();
+  if(t.length>500){t=t.slice(0,500)}
+  SG.passage=t;
+  const q=$('sg_q');if(q){q.className='quote'+(t?'':' empty');q.textContent=t?'« '+t+' »':'Aucun passage choisi pour le moment.'}
+  const n=$('sg_next');if(n)n.disabled=!t;
+}
+document.addEventListener('selectionchange',()=>{
+  if(!SG||SG.step!==2)return;
+  const sel=getSelection(),p=$('sg_pick');
+  if(!sel||sel.isCollapsed||!p||!p.contains(sel.anchorNode))return;
+  p.querySelectorAll('span.on').forEach(x=>x.classList.remove('on'));
+  sigPick(sel.toString());
+});
+document.addEventListener('keydown',e=>{if(SG&&e.key==='Escape')sigClose()});
+function sigKeep(){SG.prop=($('sg_prop')||{}).value||SG.prop;SG.url=(($('sg_url')||{}).value||'').trim();SG.who=(($('sg_who')||{}).value||'').trim()}
+async function sigSend(){
+  sigKeep();
+  const prop=SG.prop.replace(/\s+/g,' ').trim();
+  if(!prop||prop===SG.passage){SG.err='Écrivez la correction : le texte est identique au passage.';sigDraw();return}
+  if(SG.url&&!/^https?:\/\/\S+$/i.test(SG.url)){SG.err='Le lien doit commencer par https://';sigDraw();return}
+  if(SG.who)localStorage.setItem('agora_nom',SG.who);
+  SG.busy=true;SG.err='';sigDraw();
+  const e=SG.e,T=SGT.find(t=>t[0]===SG.type);
+  const p={v:1,summary_id:e.id,report_id:e.report_id||null,source:e.source,published_at:e.published_at,type:SG.type,passage:SG.passage,proposition:prop,source_url:SG.url||null,auteur:SG.who||null};
+  // Bloc caché lu par le workflow ; « < » et « > » échappés pour ne jamais fermer le commentaire.
+  const json=JSON.stringify(p).replace(/</g,'\\u003c').replace(/>/g,'\\u003e');
+  const body='Signalement envoyé depuis le site Agora.\n\n**Type :** '+T[2]+'\n**Fiche :** '+e.source+' ('+dt(e.published_at)+')\n**Passage publié :** « '+SG.passage+' »\n**Correction proposée :** « '+prop+' »'+(SG.url?'\n**Source :** '+SG.url:'')+(SG.who?'\n**Signalé par :** '+SG.who:'')+'\n\nLa vérification automatique démarre dans quelques instants.\n\n<!-- agora-signalement\n'+json+'\n-->';
+  try{
+    const r=await fetch('https://api.github.com/repos/'+TEAM.repo+'/issues',{method:'POST',headers:{Authorization:'Bearer '+TEAM.token,Accept:'application/vnd.github+json'},body:JSON.stringify({title:'[Signalement] '+T[2]+' : '+SG.passage.slice(0,70),body})});
+    if(!r.ok)throw new Error(r.status===401||r.status===403?'accès refusé (jeton expiré ?)':'erreur '+r.status);
+    SG.num=(await r.json()).number;SG.step=4;SG.busy=false;
+    mesAdd({num:SG.num,date:new Date().toISOString(),source:e.source,type:SG.type,passage:SG.passage,proposition:prop});mesBtn();
+    sigDraw();
+  }catch(err){SG.busy=false;SG.err='Envoi impossible : '+err.message+'. Réessayez plus tard.';sigDraw()}
+}
+/* ================= MES SIGNALEMENTS =================
+   Sans compte : la liste est gardée sur cet appareil (navigateur) ; le statut
+   vient du site (team.enc.json, mis à jour après chaque vérification ou décision). */
+const MSK='agora_mes_sig';
+const mesList=()=>{try{const l=JSON.parse(localStorage.getItem(MSK)||'[]');return Array.isArray(l)?l:[]}catch(e){return []}};
+function mesAdd(o){try{const l=mesList().filter(x=>x.num!==o.num);l.unshift(o);localStorage.setItem(MSK,JSON.stringify(l.slice(0,100)))}catch(e){}}
+let inMes=false;
+const MST={en_cours:['En cours de vérification','warn','La vérification automatique est en cours ; le résultat apparaît ici en général en quelques minutes.'],
+  a_trancher:['Examen par l\'équipe','warn','La vérification automatique n\'a pas suffi : l\'équipe va trancher.'],
+  corrige_auto:['Corrigé','ok','Erreur confirmée par la vérification automatique, la fiche a été rectifiée. Merci !'],
+  accepte:['Corrigé','ok','Erreur confirmée par l\'équipe, la fiche a été rectifiée. Merci !'],
+  rejete:['Non retenu','bad','Après vérification, la fiche n\'a pas été modifiée.']};
+function mesBtn(){
+  const n=mesList().length,b=$('mesBtn');
+  b.hidden=!(n&&TEAM)||inAdmin;
+  b.innerHTML='⚑ <span class="lg">Mes signalements </span>('+n+')';
+}
+function showMes(on){
+  inMes=on;$('pub').hidden=on;$('mes').hidden=!on;
+  if(on){mesRender();window.scrollTo(0,0)}
+}
+function mesRender(){
+  const L=mesList(),S=(TEAM&&TEAM.suivi)||{};
+  let h='<div class="row"><button class="btn sec" id="mes_back">← Retour aux fiches</button></div><h2>Mes signalements</h2><p class="hint">Les signalements envoyés depuis cet appareil, le plus récent en premier.</p>';
+  h+=L.map(x=>{
+    const s=S[String(x.num)]||{statut:'en_cours'},m=MST[s.statut]||MST.en_cours;
+    return '<article class="card"><div class="meta"><span class="src">n° '+esc(x.num)+' · '+esc(x.source)+'</span><span>'+dt(x.date)+'</span><span class="b '+m[1]+'">'+m[0]+'</span></div>'
+      +'<div class="ev"><b>Publié :</b> « '+esc(x.passage)+' »</div><div class="ev"><b>Proposé :</b> « '+esc(x.proposition)+' »</div>'
+      +(s.retenu&&s.retenu!==x.proposition?'<div class="ev"><b>Retenu :</b> « '+esc(s.retenu)+' »</div>':'')
+      +'<p class="hint" style="margin:8px 0 0">'+m[2]+(s.motif?' Motif : '+esc(s.motif)+'.':'')+'</p></article>';
+  }).join('')||'<div id="state">Aucun signalement envoyé depuis cet appareil.</div>';
+  $('mes').innerHTML=h;
+  $('mes_back').onclick=()=>showMes(false);
+}
+$('mesBtn').onclick=()=>showMes(!inMes);
+$('refresh').onclick=load;
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+setInterval(load,300000);
+load();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+/* ================= VUE ADMINISTRATEUR (données chiffrées) ================= */
+const NIV={officiel:'officiel',agence:'agence',grand_media:'grand média',autre:'autre'};
+const ST={completed:['Vérifié','ok'],corrections_applied:['Vérifié et corrigé','ok'],no_grounding_sources:['Aucune source externe trouvée','warn'],skipped:['Contrôle sauté (quota)','warn'],unavailable:['Vérification indisponible','bad'],invalid_response:['Réponse invalide','bad'],empty_input:['Entrée vide','warn']};
+let A=null,atab='j',inAdmin=false,jonly=false;
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function decrypt(blob,pass){
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(blob.salt),iterations:blob.iter,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']);
+  let buf=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(blob.iv)},key,b64(blob.data));
+  if(blob.gz){buf=await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()}
+  return JSON.parse(new TextDecoder().decode(buf));
+}
+const pre=t=>t?'<pre>'+esc(t)+'</pre>':'<div class="mono">-</div>';
+const link=u=>/^https?:\/\//.test(u||'')?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u.replace(/^https?:\/\/(www\.)?/,'').slice(0,70))+'</a>':esc(u);
+const dt=iso=>iso?new Date(iso).toLocaleString('fr-FR',{timeZone:TZ,day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'-';
+function showAdmin(on){inAdmin=on;inMes=false;$('mes').hidden=true;$('pub').hidden=on;$('adm').hidden=!on;$('adminBtn').textContent=on?'Public':'Admin';mesBtn();if(on)adminRender()}
+function lockScreen(msg){
+  $('adm').innerHTML='<h2>Espace administrateur</h2><p>Toutes les données de contrôle (journal d\'exécution complet, vérifications, corrections, sources, erreurs, état du pipeline). Mot de passe requis.</p><div class="row"><input id="pw" type="password" placeholder="Mot de passe" autocomplete="current-password"><button class="btn" id="unlock">Déverrouiller</button></div><label><input type="checkbox" id="rem"> Se souvenir sur cet appareil</label><div class="err" id="aerr">'+esc(msg||'')+'</div>';
+  $('unlock').onclick=()=>unlock($('pw').value,$('rem').checked);
+  $('pw').onkeydown=e=>{if(e.key==='Enter')$('unlock').click()};
+}
+async function unlock(pw,remember,silent){
+  if(!pw)return;
+  if(!silent)$('aerr').textContent='Déchiffrement…';
+  try{
+    const r=await fetch('admin.enc.json?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('absent');
+    A=await decrypt(await r.json(),pw);
+    if(remember)localStorage.setItem('agora_pw',pw);
+    adminRender();
+  }catch(e){
+    localStorage.removeItem('agora_pw');
+    lockScreen(e.message==='absent'?"La vue administrateur n'est pas encore publiée.":'Mot de passe incorrect.');
+  }
+}
+
+/* ================= ANNUAIRE (modifiable depuis l'admin) ================= */
+const GHK='agora_gh';
+const ghCfg=()=>{try{return JSON.parse(localStorage.getItem(GHK)||'{}')}catch(e){return {}}};
+const nrm=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9 ]+/g,' ').trim();
+let annMsg='',annQ='';
+async function ghFile(){
+  const c=ghCfg(),url='https://api.github.com/repos/'+c.repo+'/contents/data/annuaire_noms.json';
+  const r=await fetch(url+'?t='+Date.now(),{headers:{Authorization:'Bearer '+c.token,Accept:'application/vnd.github+json'},cache:'no-store'});
+  if(!r.ok)throw new Error('lecture GitHub '+r.status);
+  const j=await r.json();
+  const txt=new TextDecoder().decode(Uint8Array.from(atob(j.content.replace(/\n/g,'')),x=>x.charCodeAt(0)));
+  return {url,sha:j.sha,data:JSON.parse(txt)};
+}
+async function annSave(change,label){
+  const c=ghCfg();if(!c.token||!c.repo){annMsg='Configurez d\'abord l\'accès GitHub (en bas de cet onglet).';adminRender();return}
+  annMsg='Enregistrement…';adminRender();
+  try{
+    for(let attempt=0;attempt<2;attempt++){
+      const f=await ghFile();f.data.entrees=f.data.entrees||[];f.data.rejetes=f.data.rejetes||[];
+      change(f.data);
+      const body=JSON.stringify(f.data,null,1)+'\n',b64=btoa(String.fromCharCode(...new TextEncoder().encode(body)));
+      const r=await fetch(f.url,{method:'PUT',headers:{Authorization:'Bearer '+c.token,Accept:'application/vnd.github+json'},body:JSON.stringify({message:'Annuaire : '+label,content:b64,sha:f.sha})});
+      if(r.ok){A.state.annuaire=A.state.annuaire||{};A.state.annuaire.manuel=f.data;annMsg='Enregistré : '+label+'. Pris en compte dès le prochain résumé.';adminRender();return}
+      if(r.status!==409)throw new Error('écriture GitHub '+r.status);
+    }
+    throw new Error('conflit répété');
+  }catch(e){annMsg='Échec : '+e.message+'. Vérifiez le jeton GitHub.';adminRender()}
+}
+function annForm(e){
+  e=e||{};
+  return '<div class="row"><input id="an_nom" placeholder="Nom exact (ex. Joseph Dion Ngute)" value="'+esc(e.nom||'')+'" style="flex:2;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)">'
+   +'<input id="an_type" placeholder="Type (personne, ville…)" value="'+esc(e.type||'')+'" style="flex:1;min-width:120px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"></div>'
+   +'<div class="row"><input id="an_fn" placeholder="Fonction (facultatif)" value="'+esc(e.fonction||'')+'" style="flex:2;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"><input id="an_pays" placeholder="Pays (ex. Cameroun)" value="'+esc(e.pays||'')+'" style="flex:1;min-width:120px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"></div>'
+   +'<div class="row"><input id="an_var" placeholder="Erreurs déjà vues, séparées par des virgules (facultatif)" value="'+esc((e.variantes||[]).join(', '))+'" style="flex:1;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"></div>';
+}
+function annRead(){
+  const nom=$('an_nom').value.trim();if(!nom)return null;
+  const o={nom};const t=$('an_type').value.trim(),f=$('an_fn').value.trim(),py=$('an_pays').value.trim(),v=$('an_var').value.split(',').map(x=>x.trim()).filter(Boolean);
+  if(t)o.type=t;if(f)o.fonction=f;if(py)o.pays=py;if(v.length)o.variantes=v;return o;
+}
+function tabA(){
+  const M=((A.state||{}).annuaire||{}).manuel||{},L=((A.state||{}).annuaire||{}).appris||{};
+  const man=M.entrees||[],rej=new Set((M.rejetes||[]).map(nrm)),mset=new Set(man.map(e=>nrm(e.nom)));
+  const app=(L.entrees||[]).filter(e=>!mset.has(nrm(e.nom))&&!rej.has(nrm(e.nom)));
+  const q=nrm(annQ),flt=e=>!q||nrm(e.nom+' '+(e.fonction||'')+' '+(e.variantes||[]).join(' ')).includes(q);
+  const c=ghCfg();
+  let h='<p>L\'annuaire fait foi : avant chaque publication, les noms presque identiques sont remis à cette orthographe. Les noms confirmés par deux médias sont appris et utilisés automatiquement ; <b>vos entrées priment</b> sur eux.</p>';
+  if(annMsg)h+='<div class="alert">'+esc(annMsg)+'</div>';
+  h+='<div class="card"><h2 style="margin-top:0">Ajouter un nom</h2>'+annForm()+'<button class="btn" id="an_add">Ajouter à l\'annuaire</button></div>';
+  h+='<div class="row"><input id="an_q" placeholder="Rechercher un nom…" value="'+esc(annQ)+'" style="flex:1;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"></div>';
+  h+='<h2>Appris automatiquement, déjà utilisés ('+app.length+')</h2><p style="font-size:14px">Confirmés par au moins deux médias différents : ils corrigent déjà les textes, sans attendre. N\'intervenez qu\'en cas d\'exception.</p>'+(app.filter(flt).map((e,i)=>'<div class="card"><b>'+esc(e.nom)+'</b> <span class="b ok">actif</span><div class="mono">confirmé par : '+esc((e.medias||[]).join(', ')||'-')+(e.variantes&&e.variantes.length?'<br>erreurs corrigées : '+esc(e.variantes.join(', ')):'')+'</div><div class="row"><button class="btn sec" data-ok="'+esc(e.nom)+'">Corriger</button><button class="btn sec" data-no="'+esc(e.nom)+'">Rejeter</button></div></div>').join('')||'<div class="mono">Aucun nom appris pour le moment.</div>');
+  const sgn=((A.state||{}).annuaire||{}).signales||[];
+  if(sgn.length)h+='<h2>Validés par signalement ('+sgn.length+')</h2><p style="font-size:14px">Corrections prouvées ou acceptées dans l\'onglet Signalements. Pour en retirer un, rejetez le signalement correspondant.</p>'+sgn.filter(flt).map(e=>'<div class="card"><b>'+esc(e.nom)+'</b> <span class="b ok">actif</span><div class="mono">'+esc(e.source)+(e.variantes.length?'<br>erreur corrigée : '+esc(e.variantes.join(', ')):'')+'</div></div>').join('');
+  h+='<h2>Vos entrées ('+man.length+')</h2><table><tr><th>Nom</th><th>Type / fonction / pays</th><th>Erreurs vues</th><th></th></tr>'+man.filter(flt).map(e=>'<tr><td><b>'+esc(e.nom)+'</b></td><td>'+esc([e.type,e.fonction,e.pays].filter(Boolean).join(' · '))+'</td><td>'+esc((e.variantes||[]).join(', '))+'</td><td><button class="btn sec" data-ed="'+esc(e.nom)+'">Modifier</button> <button class="btn sec" data-del="'+esc(e.nom)+'">Retirer</button></td></tr>').join('')+'</table>';
+  if((M.rejetes||[]).length)h+='<h2>Noms rejetés ('+M.rejetes.length+')</h2><div class="mono">'+esc(M.rejetes.join(', '))+'</div>';
+  h+='<details class="appr"><summary>Accès GitHub pour enregistrer '+(c.token?'(configuré)':'(à configurer)')+'</summary><p style="font-size:14px">Un jeton GitHub « fine-grained » limité au dépôt du pipeline, avec la seule permission <b>Contents : Read and write</b>. Il reste uniquement dans ce navigateur, il n\'est jamais publié.</p><div class="row"><input id="gh_repo" placeholder="propriétaire/dépôt" value="'+esc(c.repo||'gdinang/numeraizer-automation-agora')+'" style="flex:1;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"></div><div class="row"><input id="gh_tok" type="password" placeholder="Jeton GitHub" value="'+esc(c.token||'')+'" style="flex:1;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)"><button class="btn" id="gh_save">Enregistrer l\'accès</button><button class="btn sec" id="gh_forget">Oublier</button></div></details>';
+  return h;
+}
+function annBind(){
+  const on=(id,f)=>{const el=$(id);if(el)el.onclick=f};
+  on('an_add',()=>{const o=annRead();if(!o)return;annSave(d=>{d.entrees=d.entrees.filter(x=>nrm(x.nom)!==nrm(o.nom));d.entrees.push(o);d.rejetes=d.rejetes.filter(x=>nrm(x)!==nrm(o.nom))},'ajout de '+o.nom)});
+  const q=$('an_q');if(q)q.oninput=()=>{annQ=q.value;const p=q.selectionStart;adminRender();const n=$('an_q');n.focus();n.setSelectionRange(p,p)};
+  document.querySelectorAll('[data-ok]').forEach(b=>b.onclick=()=>{const nom=b.dataset.ok,L=((A.state.annuaire||{}).appris||{}).entrees||[],e=L.find(x=>x.nom===nom)||{nom};
+    const box=document.createElement('div');box.innerHTML='<h2>Corriger « '+esc(nom)+' »</h2>'+annForm(e)+'<button class="btn" id="an_fix">Enregistrer</button>';b.closest('.card').appendChild(box);
+    $('an_fix').onclick=()=>{const o=annRead();if(!o)return;annSave(d=>{d.entrees=d.entrees.filter(x=>nrm(x.nom)!==nrm(o.nom));d.entrees.push(o);if(nrm(o.nom)!==nrm(nom))d.rejetes.push(nom)},'correction de '+nom)}});
+  document.querySelectorAll('[data-no]').forEach(b=>b.onclick=()=>{const nom=b.dataset.no;if(confirm('Rejeter « '+nom+' » ? Il ne sera plus utilisé ni réappris.'))annSave(d=>{d.rejetes.push(nom)},'rejet de '+nom)});
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{const nom=b.dataset.del;if(confirm('Retirer « '+nom+' » de l\'annuaire ?'))annSave(d=>{d.entrees=d.entrees.filter(x=>x.nom!==nom)},'retrait de '+nom)});
+  document.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>{const nom=b.dataset.ed,M=(A.state.annuaire||{}).manuel||{},e=(M.entrees||[]).find(x=>x.nom===nom);if(!e)return;
+    const box=document.createElement('div');box.className='card';box.innerHTML='<h2 style="margin-top:0">Modifier « '+esc(nom)+' »</h2>'+annForm(e)+'<button class="btn" id="an_upd">Enregistrer la modification</button>';b.closest('tr').after(Object.assign(document.createElement('tr'),{innerHTML:'<td colspan="4"></td>'}));b.closest('tr').nextSibling.firstChild.appendChild(box);
+    $('an_upd').onclick=()=>{const o=annRead();if(!o)return;annSave(d=>{d.entrees=d.entrees.map(x=>x.nom===nom?Object.assign({},x,o):x)},'modification de '+o.nom)}});
+  on('gh_save',()=>{localStorage.setItem(GHK,JSON.stringify({repo:$('gh_repo').value.trim(),token:$('gh_tok').value.trim()}));annMsg='Accès GitHub enregistré dans ce navigateur.';adminRender()});
+  on('gh_forget',()=>{localStorage.removeItem(GHK);annMsg='Accès GitHub oublié.';adminRender()});
+}
+function adminRender(){
+  if(!A){const p=localStorage.getItem('agora_pw');if(p){unlock(p,true,true)}else lockScreen();return}
+  const nsg=((((A.state||{}).signalements||{}).signalements)||[]).filter(s=>s.statut==='a_trancher').length;
+  const tabs=[['j','Journal'],['q','Qualité'],['g','Signalements'+(nsg?' ('+nsg+')':'')],['a','Annuaire'],['p','Pipeline'],['s','Résumés']];
+  $('adm').innerHTML='<div class="row"><span class="mono">Données du '+dt(A.generated_at)+'</span><button class="btn sec" id="lock">Verrouiller</button><button class="btn sec" id="dl">Télécharger tout (JSON)</button></div><div id="atabs" style="display:flex;gap:8px;margin-bottom:8px;overflow-x:auto;padding-bottom:4px"></div><div id="abody"></div>';
+  tabs.forEach(([k,l])=>{const b=document.createElement('button');b.className='chip'+(atab===k?' on':'');b.textContent=l;b.onclick=()=>{atab=k;adminRender()};$('atabs').appendChild(b)});
+  $('lock').onclick=()=>{A=null;localStorage.removeItem('agora_pw');lockScreen()};
+  $('dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(A,null,1)],{type:'application/json'}));a.download='agora-admin.json';a.click()};
+  $('abody').innerHTML=atab==='j'?tabJ():atab==='q'?tabQ():atab==='g'?tabG():atab==='a'?tabA():atab==='p'?tabP():tabS();
+  if(atab==='a')annBind();
+  if(atab==='g')sgBind();
+  if(atab==='j'){const f=$('jf');if(f)f.onclick=()=>{jonly=!jonly;adminRender()}}
+}
+function facts(r){
+  const v=r.verification||{},e=r.editorial||{};
+  const orig=v.original_facts??e.extracted_facts??'';
+  const ver=v.verified_same_as_original?orig:(v.verified_facts??e.verified_facts??'');
+  return [orig,ver];
+}
+function tabQ(){
+  const R=A.reports||[];
+  const n=k=>R.filter(r=>(r.verification||{}).verification_status===k).length;
+  const ca=R.reduce((a,r)=>a+((r.verification||{}).corrections_applied||[]).length,0);
+  const cn=R.reduce((a,r)=>a+((r.verification||{}).corrections_not_applied||[]).length,0);
+  const fe=R.filter(r=>(r.editorial||{}).editorial_status==='failed').length;
+  const nf=R.reduce((a,r)=>a+((r.editorial||{}).name_fixes||[]).length,0);
+  const fw=R.filter(r=>((r.editorial||{}).fidelity_warnings||[]).length).length;
+  const tw=R.filter(r=>((r.editorial||{}).temporal_warnings||[]).length).length;
+  const ko=n('unavailable')+n('invalid_response');
+  const SGL=(((A.state||{}).signalements||{}).signalements)||[],t7=((A.state||{}).taux||{})['7']||{};
+  let h='<div class="kpis">'+[['Rapports',R.length],['Vérifiés',n('completed')+n('corrections_applied')],['Sans source externe',n('no_grounding_sources')],['Vérif. échouée',ko],['Corrections appliquées',ca],['Corrections refusées',cn],['Noms corrigés (annuaire)',nf],['Textes à relire (fidélité)',fw],['Alertes de date',tw],['Échecs rédaction',fe],['Erreurs signalées confirmées',SGL.filter(s=>s.statut==='corrige_auto'||s.statut==='accepte').length],['Taux d\'erreur 7 j (pour 100 faits)',pctFr(t7.taux)]].map(([l,v])=>'<div class="kpi"><b>'+v+'</b><span>'+l+'</span></div>').join('')+'</div>';
+  if(R.length&&ko>=R.length/2)h+='<div class="alert">⚠ La vérification factuelle n\'a pas abouti pour '+ko+' rapport(s) sur '+R.length+' : dans ce cas les faits originaux sont publiés sans contrôle externe.</div>';
+  return h+R.map(rep).join('')||'<div id="state">Aucun rapport.</div>';
+}
+function rep(r){
+  const v=r.verification||{},e=r.editorial||{};
+  const vs=ST[v.verification_status]||[v.verification_status||'-','warn'];
+  const es=e.editorial_status==='completed'?['Rédigé','ok']:e.editorial_status?['Rédaction échouée','bad']:['-','warn'];
+  const [orig,ver]=facts(r);
+  const ca=v.corrections_applied||[],cn=v.corrections_not_applied||[];
+  const gs=v.grounding_sources||[],gq=v.grounding_queries||[];
+  const chg=(c,no)=>'<div class="chg'+(no?' no':'')+'"><b>Avant :</b> '+esc(c.original_text)+'<br><b>Après :</b> '+esc(c.corrected_text)+'<br><b>Raison :</b> '+esc(c.reason)+(no?'<br><b>Non appliquée :</b> '+esc(c.why_not_applied):'')+(c.source_urls&&c.source_urls.length?'<br>'+c.source_urls.map(link).join('<br>'):'')+'</div>';
+  const S=A.summaries.find(x=>x.report_id===r.report_id);
+  return '<article class="card"><div class="meta"><span class="src">'+esc(r.source)+'</span><span>'+dt(r.timestamp_utc)+'</span><span class="b '+vs[1]+'">'+esc(vs[0])+'</span><span class="b '+es[1]+'">'+esc(es[0])+'</span>'+(ca.length?'<span class="b ok">'+ca.length+' correction(s)</span>':'')+(cn.length?'<span class="b warn">'+cn.length+' refusée(s)</span>':'')+'</div><div><b>'+esc(r.context)+'</b></div>'
+   +((v.uncertain_names||[]).length?'<div class="mono">Noms mal entendus à l\'écoute, vérifiés en priorité : '+esc(v.uncertain_names.join(', '))+'</div>':'')
+   +(S&&(S.rectifications||[]).length?'<div class="mono">Signalements : '+esc(S.rectifications.map(c=>'« '+c.avant+' » devient « '+c.apres+' » (n°'+c.issue+', '+(c.methode==='auto'?'vérifié automatiquement':'validé par l\'équipe')+')').join(' ; '))+'</div>':'')
+   +((e.temporal_warnings||[]).length?'<div class="alert">Date : '+esc(e.temporal_warnings.join(' ; '))+'</div>':'')+((e.fidelity_warnings||[]).length?'<div class="alert">Fidélité : '+esc(e.fidelity_warnings.join(' ; '))+'</div>':'')+((e.name_fixes||[]).length?'<div class="mono">Annuaire : '+esc(e.name_fixes.map(c=>c['avant']+' devient '+c['après']).join(', '))+'</div>':'')
+   +'<details class="rep"><summary>Tous les détails</summary>'
+   +(S?'<h4>Publication</h4><div class="msg">'+msg(S.message)+'</div>':(e.published_text?'<h4>Texte rédigé</h4><div class="msg">'+msg(e.published_text)+'</div>':''))
+   +'<h4>Noms corrigés par l\'annuaire ('+(e.name_fixes||[]).length+')</h4>'+((e.name_fixes||[]).map(c=>'<div class="chg"><b>'+esc(c['avant'])+'</b> devient <b>'+esc(c['après'])+'</b></div>').join('')||'<div class="mono">Aucun</div>')
+   +'<h4>Cohérence des dates'+(e.reference_date?' (diffusion : '+esc(e.reference_date)+')':'')+'</h4>'+((e.temporal_warnings||[]).length?e.temporal_warnings.map(w=>'<div class="chg no">'+esc(w)+'</div>').join(''):'<div class="mono">'+(e.temporal_warnings?'Aucune incohérence de date détectée.':'Non contrôlée (rapport antérieur)')+'</div>')
+   +'<h4>Fidélité du texte publié</h4>'+((e.fidelity_warnings||[]).length?(e.fidelity_warnings.map(w=>'<div class="chg no">'+esc(w)+' : à vérifier</div>').join('')):'<div class="mono">'+(e.fidelity_warnings?'Tous les chiffres et noms viennent des faits.':'Non contrôlée (rapport antérieur)')+'</div>')
+   +'<h4>Corrections appliquées ('+ca.length+')</h4>'+(ca.map(c=>chg(c,0)).join('')||'<div class="mono">Aucune</div>')
+   +'<h4>Corrections non appliquées ('+cn.length+')</h4>'+(cn.map(c=>chg(c,1)).join('')||'<div class="mono">Aucune</div>')
+   +'<h4>Contrôles effectués ('+(v.checks||[]).length+')</h4>'+((v.checks||[]).length?pre(JSON.stringify(v.checks,null,1)):'<div class="mono">Aucun</div>')
+   +'<h4>Sources externes'+(v.verification_method==='news_feeds'?' (flux d\'actualité)':v.verification_method==='google_search'?' (Google Search)':'')+' ('+gs.length+')'+(v.search_country?' · recherche réglée sur : '+esc(v.search_country):'')+'</h4>'+(gs.map(g=>'<div>'+(typeof g==='string'?link(g):(g.id?'['+esc(g.id)+'] ':'')+(g.niveau?'<span class="b'+(g.niveau==='officiel'||g.niveau==='agence'?' ok':'')+'">'+esc(NIV[g.niveau]||g.niveau)+'</span> ':'')+(g.lu?'<span class="b">lu en entier</span> ':'')+link(g.url||g.uri)+(g.title?' : '+esc(g.title):''))+'</div>').join('')||'<div class="mono">Aucune</div>')
+   +((v.elements||[]).length?'<h4>Éléments vérifiés un par un ('+v.elements.length+')</h4><div class="mono">'+esc(v.elements.map(e=>e.element+(e.incertain?' (mal entendu)':'')).join(' · '))+'</div>':'')
+   +(gq.length?'<h4>Requêtes de vérification</h4>'+pre(gq.join('\n')):'')
+   +'<h4>Faits extraits (originaux)</h4>'+pre(orig)
+   +(ver!==orig?'<h4>Faits après vérification</h4>'+pre(ver):'')
+   +(v.error||e.error||v.note||e.note?'<h4>Erreurs et notes</h4>'+pre([v.error&&'Vérification : '+v.error,e.error&&'Rédaction : '+e.error,v.note,e.note].filter(Boolean).join('\n'))+(v.verification_raw_response?'<h4>Réponse brute du vérificateur</h4>'+pre(v.verification_raw_response):''):'')
+   +'<h4>Technique</h4><div class="mono">modèle : '+esc(v.model||'-')+'<br>rapport : '+esc(r.report_id)+'<br>vérification : '+esc(v.timestamp_utc||'-')+'<br>rédaction : '+esc(e.timestamp_utc||'-')+'</div>'
+   +'</details></article>';
+}
+const WARN=/erreur|échec|échou|quota|bloqu|traceback|exception|impossible|forbidden|timeout|client error|non bloquant|unavailable/i;
+function tabJ(){
+  const R=A.runs||[];
+  if(!R.length)return '<div id="state">Aucun journal d\'exécution publié pour le moment.<br>Il apparaîtra après la prochaine exécution du pipeline (déjà corrigé), puis la publication de la PWA.</div>';
+  const SB={ok:['OK','ok'],warning:['Alertes','warn'],error:['Plantage','bad']};
+  const nbad=R.filter(r=>r.status==='error').length,nwarn=R.filter(r=>r.status==='warning').length;
+  let h='<div class="kpis">'+[['Exécutions',R.length],['Sans alerte',R.length-nwarn-nbad],['Avec alertes',nwarn],['Plantages',nbad]].map(([l,v])=>'<div class="kpi"><b>'+v+'</b><span>'+l+'</span></div>').join('')+'</div>';
+  h+='<div class="row"><button class="btn sec" id="jf">'+(jonly?'Afficher tout le journal':'Surligner seulement les alertes')+'</button><span class="mono">'+R.length+' exécution(s) · la plus récente en premier</span></div>';
+  return h+R.map((r,i)=>{
+    const st=SB[r.status]||['-','warn'];
+    const lines=String(r.log||'').split('\n');
+    const body=lines.filter(l=>!jonly||WARN.test(l)||/^=== /.test(l)).map(l=>'<div class="'+(WARN.test(l)?'w':/^=== /.test(l)?'h':'')+'">'+esc(l||' ')+'</div>').join('')||'<div class="mono">Aucune alerte dans cette exécution.</div>';
+    return '<article class="card"><div class="meta"><span class="src">'+dt(r.started_utc)+'</span><span class="b '+st[1]+'">'+st[0]+'</span>'+(r.warning_lines?'<span class="b warn">'+r.warning_lines+' ligne(s) à surveiller</span>':'')+'<span>'+esc(r.trigger||'')+(r.forced?' · forcé':'')+'</span></div>'
+      +'<details class="rep"'+(i===0?' open':'')+'><summary>Journal complet ('+lines.length+' lignes)</summary><div class="runlog">'+body+'</div>'
+      +(r.truncated?'<div class="mono">Journal tronqué (trop long).</div>':'')+(r.run_url?'<div class="mono">'+link(r.run_url)+'</div>':'')+'</details></article>';
+  }).join('');
+}
+
+const GCOL={'extraction':'#2563eb','rédaction':'#059669','contrôle externe : requêtes':'#d97706','contrôle externe : comparaison':'#b45309',"résumé de l'Évangile":'#7c3aed','signalement : verdict':'#db2777'};
+const gcol=p=>GCOL[p]||'#6b7280';
+function tabGem(){
+  const U=((A.state||{}).gemini_usage)||{},P=U.pipeline||{},Vr=U.verset||{},Sg=U.signalement||{};
+  const days={};[P,Vr,Sg].forEach(u=>Object.entries(u.days||{}).forEach(([d,o])=>{const t=days[d]=days[d]||{ok:0,refused:0,errors:0,bp:{}};t.ok+=o.ok||0;t.refused+=o.refused||0;t.errors+=o.errors||0;Object.entries(o.by_purpose||{}).forEach(([k,n])=>t.bp[k]=(t.bp[k]||0)+n)}));
+  const keys=Object.keys(days).sort().slice(-14);
+  if(!keys.length)return '<h2>Appels Gemini</h2><div class="mono">Aucun appel enregistré pour le moment (le compteur démarre avec la nouvelle version).</div>';
+  const last=days[keys[keys.length-1]],budget=P.budget||0;
+  let h='<h2>Appels Gemini</h2><div class="kpis">'+[['Aujourd\'hui (réussis)',last.ok+(budget?' / '+budget:'')],['Refus de quota',last.refused],['Autres erreurs',last.errors]].map(([l,v])=>'<div class="kpi"><b>'+v+'</b><span>'+l+'</span></div>').join('')+'</div>';
+  const purposes=[...new Set(keys.flatMap(k=>Object.keys(days[k].bp)))];
+  const W=640,H=180,pad=24,bw=Math.min(36,(W-pad*2)/keys.length-6),max=Math.max(1,...keys.map(k=>days[k].ok+days[k].refused));
+  let svg='<svg viewBox="0 0 '+W+' '+(H+34)+'" style="width:100%;height:auto" role="img" aria-label="Appels Gemini par jour et par étape">';
+  keys.forEach((k,i)=>{const x=pad+i*((W-pad*2)/keys.length);let y=H;
+    purposes.forEach(p=>{const n=days[k].bp[p]||0;if(!n)return;const hh=n/max*(H-10);y-=hh;svg+='<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+hh+'" fill="'+gcol(p)+'"><title>'+esc(k+' : '+p+' '+n)+'</title></rect>'});
+    const r=days[k].refused;if(r){const hh=r/max*(H-10);y-=hh;svg+='<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+hh+'" fill="none" stroke="#dc2626" stroke-dasharray="3 2"><title>'+esc(k+' : '+r+' refus')+'</title></rect>'}
+    svg+='<text x="'+(x+bw/2)+'" y="'+(H+14)+'" font-size="10" text-anchor="middle" fill="currentColor">'+k.slice(8)+'/'+k.slice(5,7)+'</text><text x="'+(x+bw/2)+'" y="'+(y-3)+'" font-size="10" text-anchor="middle" fill="currentColor">'+(days[k].ok||'')+'</text>'});
+  svg+='</svg>';
+  h+='<div class="card" style="color:var(--text)">'+svg+'<div style="display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;margin-top:6px">'+purposes.map(p=>'<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:'+gcol(p)+';margin-right:5px"></span>'+esc(p)+'</span>').join('')+'<span><span style="display:inline-block;width:10px;height:10px;border:1px dashed #dc2626;margin-right:5px"></span>refus de quota</span></div><div class="mono" style="margin-top:6px">Jour Google (heure du Pacifique) : c\'est à minuit là-bas que les quotas repartent à zéro.</div></div>';
+  const calls=[...(P.calls||[]),...(Vr.calls||[]),...(Sg.calls||[])].sort((a,b)=>a.t<b.t?-1:1);
+  const since=Date.now()-7*864e5,hrs=Array.from({length:24},()=>({ok:0,ko:0}));
+  calls.filter(c=>new Date(c.t).getTime()>=since).forEach(c=>{const hh=(+new Date(c.t).toLocaleString('fr-FR',{timeZone:TZ,hour:'2-digit',hour12:false}).slice(0,2))%24;hrs[hh][c.status==='ok'?'ok':'ko']++});
+  const hmax=Math.max(1,...hrs.map(x=>x.ok+x.ko));
+  let s3='<svg viewBox="0 0 640 150" style="width:100%;height:auto" role="img" aria-label="Appels Gemini par heure, 7 derniers jours">';
+  hrs.forEach((x,i)=>{const bx=12+i*26,ho=x.ok/hmax*110,hk=x.ko/hmax*110;
+    s3+='<rect x="'+bx+'" y="'+(120-ho)+'" width="20" height="'+ho+'" fill="#2563eb"><title>'+i+'h : '+x.ok+' appel(s) réussi(s)</title></rect>';
+    if(x.ko)s3+='<rect x="'+bx+'" y="'+(120-ho-hk)+'" width="20" height="'+hk+'" fill="none" stroke="#dc2626" stroke-dasharray="3 2"><title>'+i+'h : '+x.ko+' refus</title></rect>';
+    s3+='<text x="'+(bx+10)+'" y="136" font-size="10" text-anchor="middle" fill="currentColor">'+i+'h</text>'+(x.ok+x.ko?'<text x="'+(bx+10)+'" y="'+(116-ho-hk)+'" font-size="9" text-anchor="middle" fill="currentColor">'+(x.ok+x.ko)+'</text>':'')});
+  s3+='</svg>';
+  h+='<h2>Par heure de la journée (heure du Cameroun, 7 derniers jours)</h2><div class="card" style="color:var(--text)">'+s3+'<div class="mono">Montre les heures où les appels s\'accumulent.</div></div>';
+  if(calls.length){
+    const run=calls[calls.length-1].run,rc=calls.filter(c=>c.run===run),t0=new Date(rc[0].t).getTime();
+    const span=Math.max(60,...rc.map(c=>(new Date(c.t).getTime()-t0)/1000+(c.s||0)));
+    const rowH=22,W2=640,L=150,H2=rc.length*rowH+24;
+    let s2='<svg viewBox="0 0 '+W2+' '+H2+'" style="width:100%;height:auto" role="img" aria-label="Chronologie des appels du dernier passage">';
+    rc.forEach((c,i)=>{const x0=L+((new Date(c.t).getTime()-t0)/1000)/span*(W2-L-10),w=Math.max(3,(c.s||0)/span*(W2-L-10)),y=i*rowH+4;
+      s2+='<text x="0" y="'+(y+13)+'" font-size="11" fill="currentColor">'+esc((c.source||'').slice(0,14)+' · '+c.purpose.replace('contrôle externe : ','contrôle ').slice(0,12))+'</text>';
+      s2+='<rect x="'+x0+'" y="'+y+'" width="'+w+'" height="16" rx="3" fill="'+(c.status==='ok'?gcol(c.purpose):'#fee2e2')+'" stroke="'+(c.status==='ok'?'none':'#dc2626')+'"><title>'+esc(dt(c.t)+' · '+c.purpose+' · '+(c.source||'')+' · '+c.status+' · '+c.s+'s'+(c.detail?' · '+c.detail:''))+'</title></rect>'});
+    s2+='<text x="'+L+'" y="'+(H2-4)+'" font-size="10" fill="currentColor">0 s</text><text x="'+(W2-10)+'" y="'+(H2-4)+'" font-size="10" text-anchor="end" fill="currentColor">'+Math.round(span)+' s</text></svg>';
+    h+='<h2>Dernier passage : chronologie des appels</h2><div class="card" style="color:var(--text)">'+s2+'<div class="mono">'+rc.length+' appel(s) · début '+dt(rc[0].t)+' · chaque barre = un appel, sa longueur = sa durée ; en rouge : refusé.</div></div>';
+  }
+  return h;
+}
+/* ================= SIGNALEMENTS (admin) =================
+   Accepter / Rejeter écrit data/decisions/<n°>.json avec l'accès GitHub de l'onglet
+   Annuaire ; le workflow signalement.yml l'applique dans les minutes qui suivent. */
+const SGST={a_trancher:['À trancher','warn'],corrige_auto:['Corrigé automatiquement','ok'],accepte:['Accepté','ok'],rejete:['Rejeté','bad']};
+const SGTY={nom:'Nom',fait:'Fait',date:'Date',autre:'Autre'};
+const pctFr=t=>t==null?'-':String(t).replace('.',',');
+let sgMsg='',sgSent={};
+function tabG(){
+  const L=((((A.state||{}).signalements||{}).signalements)||[]).slice().reverse();
+  const T=(A.state||{}).taux||{},t7=T['7']||{},t30=T['30']||{},n=k=>L.filter(s=>s.statut===k).length;
+  let h='<div class="kpis">'+[['Taux d\'erreur 7 j',pctFr(t7.taux)],['Taux d\'erreur 30 j',pctFr(t30.taux)],['Reçus',L.length],['À trancher',n('a_trancher')],['Corrigés automatiquement',n('corrige_auto')],['Acceptés',n('accepte')],['Rejetés',n('rejete')]].map(([l,v])=>'<div class="kpi"><b>'+v+'</b><span>'+l+'</span></div>').join('')+'</div>';
+  h+='<p style="font-size:14px">Taux d\'erreur = erreurs confirmées (corrigées automatiquement ou acceptées) pour 100 faits publiés. 7 derniers jours : '+(t7.erreurs??0)+' erreur(s) sur '+(t7.faits??0)+' faits. Un rapport part chaque lundi matin sur le WhatsApp admin.</p>';
+  if(sgMsg)h+='<div class="alert">'+esc(sgMsg)+'</div>';
+  const att=L.filter(s=>s.statut==='a_trancher'),autres=L.filter(s=>s.statut!=='a_trancher');
+  h+='<h2>À trancher ('+att.length+')</h2>'+(att.map(sgCard).join('')||'<div class="mono">Rien à trancher.</div>');
+  h+='<h2>Historique ('+autres.length+')</h2>'+(autres.map(sgCard).join('')||'<div class="mono">Aucun signalement traité pour le moment.</div>');
+  const R=((((A.state||{}).signalements||{}).rapports)||[]).slice(-8).reverse();
+  if(R.length)h+='<h2>Rapports hebdomadaires</h2><table><tr><th>Semaine du</th><th>Taux 7 j</th><th>Erreurs / faits</th><th>Reçus</th><th>En attente</th></tr>'+R.map(r=>'<tr><td>'+dt(r.date)+'</td><td>'+pctFr((r.taux_7j||{}).taux)+'</td><td>'+((r.taux_7j||{}).erreurs??'-')+' / '+((r.taux_7j||{}).faits??'-')+'</td><td>'+r.recus+'</td><td>'+r.en_attente+'</td></tr>').join('')+'</table>';
+  if(!ghCfg().token)h+='<div class="alert">Pour décider, configurez d\'abord l\'accès GitHub (en bas de l\'onglet Annuaire).</div>';
+  return h;
+}
+function sgCard(s){
+  const v=s.verification||{},ia=v.ia||{},an=v.annuaire||{},fl=v.flux||{},u=v.url||{},st=SGST[s.statut]||[s.statut,'warn'];
+  let h='<article class="card"><div class="meta"><span class="src">n° '+esc(s.issue)+' · '+esc(s.source)+'</span><span>'+dt(s.recu_le)+'</span><span class="b">'+esc(SGTY[s.type]||s.type)+'</span><span class="b '+st[1]+'">'+st[0]+'</span>'+(s.auteur?'<span>par '+esc(s.auteur)+'</span>':'')+'</div>'
+   +'<div class="ev"><b>Publié :</b> « '+esc(s.passage)+' »</div><div class="ev"><b>Proposé :</b> « '+esc(s.proposition)+' »</div>'
+   +(s.correction&&s.correction.apres!==s.proposition?'<div class="ev"><b>Retenu :</b> « '+esc(s.correction.apres)+' »</div>':'')
+   +(ia.verdict?'<div class="ev"><b>Avis de Gemini :</b> '+esc(ia.verdict)+(ia.raison?' · '+esc(ia.raison):'')+(ia.preuves&&ia.preuves.length?' ['+esc(ia.preuves.join(', '))+']':'')+'</div>':'')
+   +((v.raisons_doute||[]).length?'<div class="alert">Doute : '+esc(v.raisons_doute.join(' ; '))+'</div>':'')
+   +(s.decision?'<div class="mono">Décision de l\'équipe ('+dt(s.decision.date)+') : '+esc(s.decision.choix)+(s.decision.motif?' · '+esc(s.decision.motif):'')+'</div>':'')
+   +'<details class="rep"><summary>Preuves vérifiées</summary>'
+   +'<h4>Annuaire</h4><div class="mono">'+((an.confirme||[]).length?'confirme : '+esc(an.confirme.join(', ')):'aucun nom ne confirme la correction')+((an.contredit||[]).length?'<br>contredit : '+esc(an.contredit.join(', ')):'')+'</div>'
+   +'<h4>Faits d\'origine</h4><div class="mono">'+(v.faits?(v.faits.contiennent_correction?'contiennent la correction':'ne contiennent pas la correction')+' · '+(v.faits.contiennent_passage?'contiennent le passage publié':'ne contiennent pas le passage publié'):'-')+'</div>'
+   +'<h4>Autres médias ('+(fl.medias_confirmants||[]).length+' confirment)</h4>'+((fl.sources||[]).map(x=>'<div>'+(x.confirme?'<span class="b ok">contient</span> ':'')+'['+esc(x.id)+'] '+link(x.url)+' : '+esc(x.titre)+'</div>').join('')||'<div class="mono">Aucun article trouvé</div>')
+   +(s.source_url?'<h4>Source du lecteur</h4><div>'+link(s.source_url)+'</div><div class="mono">'+(u.ok?(u.contient?'la page contient la correction':'la page ne contient pas la correction')+(u.origine?' · média d\'origine, ne compte pas':''):'illisible : '+esc(u.erreur||'-'))+'</div>':'')
+   +((v.notes||[]).length?'<h4>Notes</h4>'+pre(v.notes.join('\n')):'')
+   +'<div class="mono" style="margin-top:6px">'+link(s.url)+'</div></details>';
+  if(sgSent[s.issue])h+='<div class="alert">Décision envoyée ('+esc(sgSent[s.issue])+'), appliquée dans quelques minutes.</div>';
+  else if(s.statut==='a_trancher')h+='<label class="field"><span>Texte retenu si vous acceptez</span><input id="sg_t'+s.issue+'" value="'+esc(s.proposition)+'"></label>'
+   +(s.type==='nom'?'<label><input type="checkbox" id="sg_a'+s.issue+'"> Ajouter ce nom à l\'annuaire</label>':'')
+   +'<label class="field"><span>Motif (facultatif, visible par la personne qui a signalé)</span><input id="sg_m'+s.issue+'"></label><div class="row"><button class="btn" data-acc="'+s.issue+'">Accepter</button><button class="btn sec" data-rej="'+s.issue+'">Rejeter</button></div>';
+  else if(s.statut==='corrige_auto'||s.statut==='accepte')h+='<div class="row"><button class="btn sec" data-rej="'+s.issue+'" data-undo="1">Annuler la correction</button></div>';
+  return h+'</article>';
+}
+async function sgDecide(issue,decision,extra){
+  const c=ghCfg();if(!c.token||!c.repo){sgMsg='Configurez d\'abord l\'accès GitHub (en bas de l\'onglet Annuaire).';adminRender();return}
+  sgMsg='Envoi de la décision…';adminRender();
+  const H={Authorization:'Bearer '+c.token,Accept:'application/vnd.github+json'},url='https://api.github.com/repos/'+c.repo+'/contents/data/decisions/'+issue+'.json';
+  const body=JSON.stringify(Object.assign({issue,decision,date:new Date().toISOString()},extra),null,1)+'\n';
+  try{
+    let sha;const g=await fetch(url+'?t='+Date.now(),{headers:H,cache:'no-store'});if(g.ok)sha=(await g.json()).sha;
+    const r=await fetch(url,{method:'PUT',headers:H,body:JSON.stringify({message:'Signalement n°'+issue+' : '+decision,content:btoa(String.fromCharCode(...new TextEncoder().encode(body))),sha})});
+    if(!r.ok)throw new Error('écriture GitHub '+r.status);
+    sgSent[issue]=decision==='accepter'?'acceptée':'rejetée';sgMsg='';adminRender();
+  }catch(e){sgMsg='Échec : '+e.message+'. Vérifiez le jeton GitHub.';adminRender()}
+}
+function sgBind(){
+  const val=id=>(($(id)||{}).value||'').trim();
+  document.querySelectorAll('[data-acc]').forEach(b=>b.onclick=()=>{const n=+b.dataset.acc,t=val('sg_t'+n);if(!t)return;sgDecide(n,'accepter',{texte_corrige:t,annuaire:!!($('sg_a'+n)||{}).checked,motif:val('sg_m'+n)})});
+  document.querySelectorAll('[data-rej]').forEach(b=>b.onclick=()=>{const n=+b.dataset.rej;if(b.dataset.undo&&!confirm('Annuler la correction du signalement n°'+n+' ? Le texte d\'origine sera republié.'))return;sgDecide(n,'rejeter',{motif:val('sg_m'+n)||(b.dataset.undo?'correction annulée par l\'administrateur':'')})});
+}
+function tabP(){
+  const M=(A.state||{}).media_state||{},V=(A.state||{}).last_video||{};
+  const cf=Object.entries(M.consecutive_failures||{}),ls=Object.entries(M.last_sent||{}),su=Object.entries(M.sent_urls||{});
+  const bySrc={};A.summaries.forEach(s=>{const o=bySrc[s.source]=bySrc[s.source]||{n:0,last:s.published_at};o.n++});
+  const t=(head,rows)=>'<table><tr>'+head.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+(rows.join('')||'<tr><td colspan="'+head.length+'" class="mono">Aucune donnée</td></tr>')+'</table>';
+  const RP=Object.entries((((A.state||{}).reprise)||{}).items||{});
+  const SN={faits:'faits extraits',verification:'faits vérifiés',redaction:'texte rédigé'};
+  const rp='<h2>Travaux en attente de reprise ('+RP.length+')</h2><p style="font-size:14px">Contenus commencés mais pas encore publiés (coupure de Gemini, envoi raté, budget de temps). Les étapes déjà faites ne sont pas refaites au passage suivant ; abandon après 48 h.</p>'
+    +t(['Contenu','Étapes déjà faites','Passages','Dernière étape'],RP.map(([k,v])=>'<tr><td>'+esc(v.label||'')+'<div class="mono">'+esc(k)+'</div></td><td>'+esc(Object.keys(v.steps||{}).map(s=>SN[s]||s.replace('segment_','partie ')).join(', '))+'</td><td>'+(v.passages||1)+'</td><td>'+dt(v.updated)+'</td></tr>'));
+  return tabGem()+rp+'<h2>Échecs consécutifs par source</h2>'+t(['Source','Échecs'],cf.map(([k,n])=>'<tr><td>'+esc(k)+'</td><td><span class="b '+(n>=3?'bad':n?'warn':'ok')+'">'+n+'</span></td></tr>'))
+   +'<h2>Dernier épisode envoyé</h2>'+t(['Programme','Épisode'],ls.map(([k,x])=>'<tr><td>'+esc(k)+'</td><td>'+esc(x)+'</td></tr>'))
+   +'<h2>Articles déjà envoyés</h2>'+t(['Source','Nombre'],su.map(([k,x])=>'<tr><td>'+esc(k)+'</td><td>'+(x||[]).length+'</td></tr>'))
+   +'<h2>Dernière vidéo Équinoxe</h2><div class="mono">'+esc(V.last_video_id||'-')+'</div>'
+   +'<h2>Résumés archivés par source</h2>'+t(['Source','Résumés','Dernier'],Object.entries(bySrc).map(([k,o])=>'<tr><td>'+esc(k)+'</td><td>'+o.n+'</td><td>'+dt(o.last)+'</td></tr>'));
+}
+function tabS(){
+  return A.summaries.map(s=>{const k=KIND[s.kind]||KIND.texte;return '<article class="card"><div class="meta"><span class="src">'+esc(s.source)+'</span><span>'+dt(s.published_at)+'</span><span class="tag'+(k[1]?' warn':'')+'">'+k[0]+'</span></div><div class="msg">'+msg(s.message)+'</div><div class="mono" style="margin-top:8px">id '+esc(s.id)+' · rapport '+esc(s.report_id||'-')+'<br>'+link(s.url)+'</div></article>'}).join('')||'<div id="state">Aucun résumé.</div>';
+}
+$('adminBtn').onclick=()=>showAdmin(!inAdmin);
+const adminLink=()=>{$('adminBtn').hidden=!(location.hash==='#admin'||localStorage.getItem('agora_pw'))};
+adminLink();addEventListener('hashchange',()=>{adminLink();if(location.hash==='#admin')showAdmin(true)});
+if(location.hash==='#admin')showAdmin(true);
+
+</script>
+</body>
+</html>
