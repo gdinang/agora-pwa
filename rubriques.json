@@ -1,0 +1,1065 @@
+{
+ "version": 1,
+ "mise_a_jour": "2026-10-26",
+ "norme": {
+  "nom": "IPTC Media Topics",
+  "version": "2026-09-30T12:00:00+00:00",
+  "licence": "CC BY 4.0, IPTC"
+ },
+ "rattachements": {
+  "football": "sport"
+ },
+ "rubriques": [
+  {
+   "id": "politique",
+   "nom": "Politique",
+   "icone": "politique",
+   "iptc": [
+    "medtop:11000000"
+   ],
+   "sous": [
+    {
+     "id": "politique.gouvernement",
+     "nom": "Gouvernement et nominations",
+     "definition": "Décisions, conseils et politiques du gouvernement, nominations et remaniements, actions des ministres.",
+     "exemples": [
+      "Nomination d'un ministre",
+      "Conseil de cabinet",
+      "Plan gouvernemental de relance"
+     ],
+     "contre_exemples": [
+      "Un ministre victime d'un accident : Faits divers"
+     ],
+     "iptc": [
+      "medtop:20000593",
+      "medtop:20000621"
+     ]
+    },
+    {
+     "id": "politique.elections",
+     "nom": "Élections et partis",
+     "definition": "Élections, campagnes, résultats, partis politiques, opposition, implantation et mobilisation politique.",
+     "exemples": [
+      "Implantation d'un parti dans le Mayo-Louti",
+      "Scrutin présidentiel au Brésil",
+      "Mobilisation d'un parti"
+     ],
+     "contre_exemples": [
+      "Élections à la fédération de football : Football > Instances et arbitrage"
+     ],
+     "iptc": [
+      "medtop:20000574",
+      "medtop:20000648"
+     ]
+    },
+    {
+     "id": "politique.parlement",
+     "nom": "Parlement",
+     "definition": "Assemblée nationale, Sénat, sessions, lois débattues ou votées, questions aux ministres.",
+     "exemples": [
+      "Ouverture de la session parlementaire",
+      "Vote du budget à l'Assemblée"
+     ],
+     "contre_exemples": [
+      "Loi promulguée et son contenu : Justice > Lois et règlements"
+     ],
+     "iptc": []
+    },
+    {
+     "id": "politique.institutions",
+     "nom": "Institutions",
+     "definition": "Présidence de la République, Conseil constitutionnel, cours et autorités indépendantes, Constitution, hommages officiels.",
+     "exemples": [
+      "Nomination au Conseil constitutionnel",
+      "Hommage présidentiel"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "politique.administration",
+     "nom": "Administration et décentralisation",
+     "definition": "Fonction publique, réforme de l'État, communes, régions et collectivités territoriales, développement local.",
+     "exemples": [
+      "Modernisation de l'administration",
+      "Budget d'une commune",
+      "Développement local"
+     ],
+     "contre_exemples": [
+      "Travaux routiers : Économie > Transports et infrastructures"
+     ],
+     "iptc": []
+    },
+    {
+     "id": "politique.diplomatie",
+     "nom": "Diplomatie et coopération",
+     "definition": "Relations entre États, organisations internationales (ONU, UA, CEMAC), coopération, visites officielles, processus de paix.",
+     "exemples": [
+      "Coopération médiatique avec la Chine",
+      "Audition aux Nations Unies",
+      "Renforcement des liens tchadiens"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000638",
+      "medtop:20000073",
+      "medtop:20000077"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "justice",
+   "nom": "Justice",
+   "icone": "justice",
+   "iptc": [
+    "medtop:02000000"
+   ],
+   "sous": [
+    {
+     "id": "justice.proces",
+     "nom": "Procès et décisions",
+     "definition": "Tribunaux, procès, jugements, enquêtes judiciaires, avocats, détention, reports d'audience.",
+     "exemples": [
+      "Report judiciaire en Côte d'Ivoire",
+      "Condamnation en Guinée"
+     ],
+     "contre_exemples": [
+      "Arrestation au cours d'une opération de police : Faits divers > Crimes et délits"
+     ],
+     "iptc": [
+      "medtop:20000106"
+     ]
+    },
+    {
+     "id": "justice.corruption",
+     "nom": "Corruption et détournements",
+     "definition": "Corruption, détournements de fonds publics, Tribunal criminel spécial, fraude des entreprises, blanchiment.",
+     "exemples": [
+      "Alerte sur les ravages de la corruption",
+      "Détournement à une mairie"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000093",
+      "medtop:20000087"
+     ]
+    },
+    {
+     "id": "justice.droits_humains",
+     "nom": "Droits humains et libertés",
+     "definition": "Libertés publiques, liberté de la presse, discriminations, droits des détenus, torture, rapports des ONG de défense des droits.",
+     "exemples": [
+      "Arrestation d'un journaliste",
+      "Rapport sur les conditions de détention"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000587",
+      "medtop:20000775",
+      "medtop:20001373",
+      "medtop:20001320"
+     ]
+    },
+    {
+     "id": "justice.lois",
+     "nom": "Lois et règlements",
+     "definition": "Contenu des lois, décrets, codes et règlements, leur entrée en vigueur et leur application.",
+     "exemples": [
+      "Nouveau code pénal",
+      "Décret sur la circulation"
+     ],
+     "contre_exemples": [
+      "Débat à l'Assemblée : Politique > Parlement"
+     ],
+     "iptc": [
+      "medtop:20000121"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "faits_divers",
+   "nom": "Faits divers",
+   "icone": "alerte",
+   "iptc": [
+    "medtop:03000000"
+   ],
+   "sous": [
+    {
+     "id": "faits_divers.crimes",
+     "nom": "Crimes et délits",
+     "definition": "Vols, agressions, meurtres, enlèvements de droit commun, escroqueries, arrestations par la police.",
+     "exemples": [
+      "Drame dans un domicile à Garoua",
+      "Escroquerie en ligne"
+     ],
+     "contre_exemples": [
+      "Enlèvements par des groupes armés : Sécurité et défense",
+      "Trafic organisé : Sécurité et défense > Trafics"
+     ],
+     "iptc": [
+      "medtop:20000082"
+     ]
+    },
+    {
+     "id": "faits_divers.accidents",
+     "nom": "Accidents",
+     "definition": "Accidents de la route, du travail, incendies, explosions, effondrements, noyades.",
+     "exemples": [
+      "Accident de car sur la Nationale n°1",
+      "Incendie au marché"
+     ],
+     "contre_exemples": [
+      "Inondations : Environnement > Catastrophes naturelles"
+     ],
+     "iptc": [
+      "medtop:20000139",
+      "medtop:20000148",
+      "medtop:20000168",
+      "medtop:20000150"
+     ]
+    },
+    {
+     "id": "faits_divers.drames",
+     "nom": "Drames et disparitions",
+     "definition": "Drames familiaux, disparitions, appels à l'aide de familles, décès tragiques hors accident.",
+     "exemples": [
+      "Appel à l'aide de parents endeuillés"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "faits_divers.insolite",
+     "nom": "Insolite",
+     "definition": "Faits étonnants ou curieux, mésaventures.",
+     "exemples": [
+      "Un animal sauvage en pleine ville"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000503"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "securite",
+   "nom": "Sécurité et défense",
+   "icone": "shield",
+   "iptc": [
+    "medtop:16000000"
+   ],
+   "sous": [
+    {
+     "id": "securite.terrorisme",
+     "nom": "Terrorisme",
+     "definition": "Attaques et menaces terroristes (Boko Haram…), lutte antiterroriste.",
+     "exemples": [
+      "Attaque dans le Mayo-Sava"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000053",
+      "medtop:20000103"
+     ]
+    },
+    {
+     "id": "securite.conflits",
+     "nom": "Conflits armés internes",
+     "definition": "Conflits armés à l'intérieur d'un pays (crise anglophone…), groupes armés, coups d'État, massacres, victimes de guerre.",
+     "exemples": [
+      "Affrontements dans le Nord-Ouest",
+      "Coup d'État au Gabon"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000056",
+      "medtop:20000070",
+      "medtop:20000071",
+      "medtop:20001377",
+      "medtop:20001361",
+      "medtop:20000105",
+      "medtop:20000072"
+     ]
+    },
+    {
+     "id": "securite.armee_police",
+     "nom": "Armée et police",
+     "definition": "Forces de défense et de sécurité, gendarmerie, police, exercices et simulations, maintien de l'ordre, troubles et émeutes.",
+     "exemples": [
+      "Simulation sécuritaire",
+      "Sécurité et forces armées",
+      "Coup de filet sécuritaire à Douala"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000129",
+      "medtop:20000065"
+     ]
+    },
+    {
+     "id": "securite.trafics",
+     "nom": "Trafics et grand banditisme",
+     "definition": "Trafics organisés (drogue, ossements, armes, êtres humains), coupeurs de route, grand banditisme.",
+     "exemples": [
+      "Trafic de matériel climatisé neutralisé"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000101",
+      "medtop:20000095",
+      "medtop:20001283",
+      "medtop:20000100"
+     ]
+    },
+    {
+     "id": "securite.frontieres",
+     "nom": "Frontières",
+     "definition": "Sécurité et surveillance des frontières, corridors, incidents frontaliers.",
+     "exemples": [
+      "Sécurisation du corridor frontalier",
+      "Sécurité sous-régionale"
+     ],
+     "contre_exemples": [
+      "Contrôles sanitaires aux frontières : Santé"
+     ],
+     "iptc": []
+    }
+   ]
+  },
+  {
+   "id": "economie",
+   "nom": "Économie",
+   "icone": "eco",
+   "iptc": [
+    "medtop:04000000"
+   ],
+   "sous": [
+    {
+     "id": "economie.finances_publiques",
+     "nom": "Finances publiques",
+     "definition": "Budget de l'État, impôts, dette publique, FMI et bailleurs, croissance, conjoncture.",
+     "exemples": [
+      "Exemplarité budgétaire exigée",
+      "Nouvel étalonnage économique",
+      "Relance économique et ZLECAf"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000344"
+     ]
+    },
+    {
+     "id": "economie.monnaie_banques",
+     "nom": "Monnaie et banques",
+     "definition": "Monnaie (franc CFA), banque centrale (BEAC), banques, microfinance, marchés financiers, transferts d'argent.",
+     "exemples": [
+      "Démonétisation en zone Cemac",
+      "Cap sur la liste grise"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000385",
+      "medtop:20001370"
+     ]
+    },
+    {
+     "id": "economie.entreprises",
+     "nom": "Entreprises et industrie",
+     "definition": "Vie des entreprises, industrie, investissements, climat des affaires, secteur privé.",
+     "exemples": [
+      "Pôle industriel",
+      "Climat des affaires et secteur privé",
+      "Cap sur l'industrialisation"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000349",
+      "medtop:20000209",
+      "medtop:20000294",
+      "medtop:20001371",
+      "medtop:20000217"
+     ]
+    },
+    {
+     "id": "economie.commerce_prix",
+     "nom": "Commerce et prix",
+     "definition": "Prix et vie chère, commerce, marchés, consommation, importations et exportations, douane.",
+     "exemples": [
+      "Hausse du prix du carburant",
+      "Marchés approvisionnés"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000170",
+      "medtop:20000243",
+      "medtop:20001289"
+     ]
+    },
+    {
+     "id": "economie.agriculture",
+     "nom": "Agriculture, élevage, pêche et forêt",
+     "definition": "Agriculture, élevage, pêche, forêt et bois, filières (cacao, café, coton).",
+     "exemples": [
+      "Soutien ministériel à l'agriculture régénérative"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000210",
+      "medtop:20000213",
+      "medtop:20000214"
+     ]
+    },
+    {
+     "id": "economie.energie",
+     "nom": "Énergie, eau et mines",
+     "definition": "Électricité, pétrole, gaz, carburant (production), eau potable, mines et carrières.",
+     "exemples": [
+      "Délestages d'électricité",
+      "Exploitation minière"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000256",
+      "medtop:20000316",
+      "medtop:20001244"
+     ]
+    },
+    {
+     "id": "economie.transports",
+     "nom": "Transports et infrastructures",
+     "definition": "Routes, ports, aéroports, chemin de fer, transport urbain, grands chantiers et construction.",
+     "exemples": [
+      "Renforcement portuaire",
+      "Colère autour de la Nationale n°5",
+      "Mobilisation des transporteurs"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000337",
+      "medtop:20000235"
+     ]
+    },
+    {
+     "id": "economie.travail",
+     "nom": "Travail, emploi et grèves",
+     "definition": "Emploi, chômage, salaires, retraites, syndicats, grèves, droit du travail.",
+     "exemples": [
+      "Grève générale au Sénégal",
+      "Opportunités pour la jeunesse"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:09000000"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sante",
+   "nom": "Santé",
+   "icone": "sante",
+   "iptc": [
+    "medtop:07000000"
+   ],
+   "sous": [
+    {
+     "id": "sante.epidemies",
+     "nom": "Épidémies et maladies",
+     "definition": "Épidémies, maladies infectieuses et chroniques, alertes sanitaires.",
+     "exemples": [
+      "Alerte Ebola aux frontières",
+      "Choléra dans le Littoral"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000446"
+     ]
+    },
+    {
+     "id": "sante.hopitaux",
+     "nom": "Hôpitaux et système de santé",
+     "definition": "Hôpitaux, centres de santé, personnel soignant, médicaments, assurance maladie, coût des soins.",
+     "exemples": [
+      "Grève des infirmiers",
+      "Nouvel hôpital régional"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000461",
+      "medtop:20000463",
+      "medtop:20000464",
+      "medtop:20000480",
+      "medtop:20000483",
+      "medtop:20000484",
+      "medtop:20000485",
+      "medtop:20001354"
+     ]
+    },
+    {
+     "id": "sante.prevention",
+     "nom": "Prévention et vaccination",
+     "definition": "Campagnes de vaccination, dépistage, sensibilisation, santé publique.",
+     "exemples": [
+      "Lutte contre la poliomyélite",
+      "Vigilance sanitaire anti-Ebola renforcée"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20001358"
+     ]
+    },
+    {
+     "id": "sante.mere_enfant",
+     "nom": "Mère et enfant",
+     "definition": "Grossesse, accouchement, santé des nouveau-nés et des enfants, nutrition infantile.",
+     "exemples": [
+      "Mortalité maternelle"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    }
+   ]
+  },
+  {
+   "id": "education",
+   "nom": "Éducation",
+   "icone": "edu",
+   "iptc": [
+    "medtop:05000000"
+   ],
+   "sous": [
+    {
+     "id": "education.ecole",
+     "nom": "École",
+     "definition": "Écoles maternelles, primaires et secondaires, enseignants, élèves, rentrée, violences scolaires, programmes.",
+     "exemples": [
+      "Rentrée scolaire encadrée",
+      "Violences au lycée de Nsam",
+      "Infrastructures scolaires dans le Nord"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000398",
+      "medtop:20000399",
+      "medtop:20000400",
+      "medtop:20000410",
+      "medtop:20000412",
+      "medtop:20000415",
+      "medtop:20000416"
+     ]
+    },
+    {
+     "id": "education.universite",
+     "nom": "Université",
+     "definition": "Universités et grandes écoles, étudiants du supérieur, bourses.",
+     "exemples": [
+      "Grève à l'université de Yaoundé I"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000405"
+     ]
+    },
+    {
+     "id": "education.examens",
+     "nom": "Examens et concours",
+     "definition": "Examens officiels (CEP, BEPC, Probatoire, Baccalauréat, GCE), concours d'entrée, résultats.",
+     "exemples": [
+      "Résultats du baccalauréat"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000413",
+      "medtop:20000414",
+      "medtop:20001217"
+     ]
+    },
+    {
+     "id": "education.formation_pro",
+     "nom": "Formation professionnelle",
+     "definition": "Formation professionnelle et technique, apprentissage, orientation, enseignement à distance.",
+     "exemples": [
+      "Orientation professionnelle à Bertoua"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20001216",
+      "medtop:20001337"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "societe",
+   "nom": "Société",
+   "icone": "user2",
+   "iptc": [
+    "medtop:14000000"
+   ],
+   "sous": [
+    {
+     "id": "societe.femmes_famille",
+     "nom": "Femmes et famille",
+     "definition": "Droits et place des femmes, famille, mariage, violences conjugales.",
+     "exemples": [
+      "Autonomisation des femmes à Yaoundé"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000780"
+     ]
+    },
+    {
+     "id": "societe.jeunesse",
+     "nom": "Jeunesse et enfance",
+     "definition": "Jeunes, enfants, protection de l'enfance, numérique et jeunesse.",
+     "exemples": [
+      "Protection des enfants en zones de crise",
+      "Sensibilisation à l'usage du numérique"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "societe.religion",
+     "nom": "Religion",
+     "definition": "Vie des Églises, des mosquées et des communautés religieuses, fêtes, pèlerinages, dialogue interreligieux.",
+     "exemples": [
+      "Pèlerinage de Marienberg",
+      "Fin du ramadan"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:12000000"
+     ]
+    },
+    {
+     "id": "societe.migrations",
+     "nom": "Migrations et réfugiés",
+     "definition": "Émigration, immigration, diaspora, réfugiés et déplacés, visas et titres de séjour.",
+     "exemples": [
+      "Réfugiés centrafricains à l'Est",
+      "Nouvelles règles de séjour en Allemagne"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000771",
+      "medtop:20000772"
+     ]
+    },
+    {
+     "id": "societe.solidarite",
+     "nom": "Solidarité et pauvreté",
+     "definition": "Pauvreté, aide sociale, action humanitaire, ONG, handicap, famine.",
+     "exemples": [
+      "Distribution de vivres aux déplacés"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000799",
+      "medtop:20000802",
+      "medtop:20000817",
+      "medtop:20000646",
+      "medtop:20000149"
+     ]
+    },
+    {
+     "id": "societe.vie_quotidienne",
+     "nom": "Vie quotidienne",
+     "definition": "Vie des communautés, coutumes de la vie courante, lien social, démographie, valeurs.",
+     "exemples": [
+      "Rupture du lien social",
+      "Célébration de la Journée des Nations Unies"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000768",
+      "medtop:20000770",
+      "medtop:20000788",
+      "medtop:20000808"
+     ]
+    },
+    {
+     "id": "societe.portraits",
+     "nom": "Portraits et distinctions",
+     "definition": "Prix, médailles, records, célébrités, anniversaires et cérémonies honorant des personnes.",
+     "exemples": [
+      "Une Camerounaise primée à l'étranger"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:08000000",
+      "medtop:20000498",
+      "medtop:20000499",
+      "medtop:20000501",
+      "medtop:20000504",
+      "medtop:20000505",
+      "medtop:20001237",
+      "medtop:20001238"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "environnement",
+   "nom": "Environnement",
+   "icone": "feuille",
+   "iptc": [
+    "medtop:06000000"
+   ],
+   "sous": [
+    {
+     "id": "environnement.climat_meteo",
+     "nom": "Climat et météo",
+     "definition": "Changement climatique, saisons, prévisions et alertes météo.",
+     "exemples": [
+      "Saison des pluies précoce"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:17000000",
+      "medtop:20000418"
+     ]
+    },
+    {
+     "id": "environnement.catastrophes",
+     "nom": "Catastrophes naturelles",
+     "definition": "Inondations, glissements de terrain, séismes, sécheresses, éruptions.",
+     "exemples": [
+      "Alerte sismique",
+      "Glissement de terrain à Dschang"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000151"
+     ]
+    },
+    {
+     "id": "environnement.nature",
+     "nom": "Nature et biodiversité",
+     "definition": "Forêts, faune, aires protégées, ressources naturelles, développement durable.",
+     "exemples": [
+      "Braconnage dans un parc national"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000420",
+      "medtop:20000430",
+      "medtop:20000441",
+      "medtop:20001374"
+     ]
+    },
+    {
+     "id": "environnement.villes",
+     "nom": "Villes et assainissement",
+     "definition": "Propreté, déchets, pollution, assainissement, urbanisme.",
+     "exemples": [
+      "Villes propres",
+      "Ramassage des ordures à Douala"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000424"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sciences",
+   "nom": "Sciences et numérique",
+   "icone": "puce",
+   "iptc": [
+    "medtop:13000000"
+   ],
+   "sous": [
+    {
+     "id": "sciences.numerique",
+     "nom": "Numérique et télécoms",
+     "definition": "Internet, téléphonie mobile, informatique, intelligence artificielle, cybersécurité.",
+     "exemples": [
+      "Sommet numérique",
+      "Coupure d'internet"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000756",
+      "medtop:20000225"
+     ]
+    },
+    {
+     "id": "sciences.innovation",
+     "nom": "Sciences et innovation",
+     "definition": "Recherche scientifique, découvertes, innovations, institutions scientifiques.",
+     "exemples": [
+      "Recherche sur la reconstruction des victimes"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000710",
+      "medtop:20000715",
+      "medtop:20000717",
+      "medtop:20000735",
+      "medtop:20000741",
+      "medtop:20000742",
+      "medtop:20000755"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "culture",
+   "nom": "Culture et loisirs",
+   "icone": "musique",
+   "iptc": [
+    "medtop:01000000"
+   ],
+   "sous": [
+    {
+     "id": "culture.musique",
+     "nom": "Musique et spectacles",
+     "definition": "Musique, concerts, danse, théâtre, festivals.",
+     "exemples": [
+      "Festival culturel"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000002",
+      "medtop:20000018",
+      "medtop:20000007",
+      "medtop:20000029",
+      "medtop:20001181"
+     ]
+    },
+    {
+     "id": "culture.cinema_livres",
+     "nom": "Cinéma, livres et arts",
+     "definition": "Cinéma, séries, littérature, expositions, arts visuels.",
+     "exemples": [
+      "Cinémas et festivals culturels",
+      "Exposition littéraire"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000005",
+      "medtop:20000013",
+      "medtop:20000031",
+      "medtop:20001179",
+      "medtop:20000003",
+      "medtop:20000004"
+     ]
+    },
+    {
+     "id": "culture.patrimoine",
+     "nom": "Patrimoine et traditions",
+     "definition": "Patrimoine, chefferies, langues, rites et fêtes traditionnelles.",
+     "exemples": [
+      "Festival du Ngondo"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000038"
+     ]
+    },
+    {
+     "id": "culture.medias",
+     "nom": "Médias",
+     "definition": "Presse, radio, télévision, médias en ligne, réseaux sociaux, désinformation, journalistes.",
+     "exemples": [
+      "Séminaire sur la communication et le fact-checking"
+     ],
+     "contre_exemples": [
+      "Arrestation d'un journaliste : Justice > Droits humains et libertés"
+     ],
+     "iptc": [
+      "medtop:20000045",
+      "medtop:20000304"
+     ]
+    },
+    {
+     "id": "culture.tourisme",
+     "nom": "Tourisme, loisirs et art de vivre",
+     "definition": "Tourisme, loisirs, gastronomie, mode, bien-être.",
+     "exemples": [
+      "Saison touristique à Kribi"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:10000000",
+      "medtop:20000538",
+      "medtop:20000565",
+      "medtop:20001339",
+      "medtop:20000011",
+      "medtop:20000331"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "football",
+   "nom": "Football",
+   "icone": "ballon",
+   "iptc": [
+    "medtop:20001065"
+   ],
+   "sous": [
+    {
+     "id": "football.equipes_nationales",
+     "nom": "Équipes nationales",
+     "definition": "Sélections nationales (Lions indomptables, Lionnes indomptables, équipes de jeunes) : matchs, listes, entraîneurs.",
+     "exemples": [
+      "Mobilisation sportive autour des Lions"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "football.championnat",
+     "nom": "Championnat national",
+     "definition": "Championnats et coupe du pays (Elite One, Elite Two, Coupe du Cameroun), clubs locaux.",
+     "exemples": [
+      "Nouvelle formule en élite",
+      "Ligue 1 sous tension",
+      "Reprise du football"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "football.expatries",
+     "nom": "Nos joueurs à l'étranger",
+     "definition": "Joueurs du pays évoluant dans des clubs étrangers : performances, transferts.",
+     "exemples": [
+      "Un Lion décisif en Premier League"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "football.continental",
+     "nom": "Compétitions continentales",
+     "definition": "CAN, CHAN, coupes africaines des clubs (Ligue des champions et Coupe de la Confédération de la CAF).",
+     "exemples": [
+      "Exploit historique en Ligue des Champions",
+      "Sacre continental"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "football.international",
+     "nom": "Football international",
+     "definition": "Coupe du monde, grands championnats et clubs étrangers sans joueur du pays au centre du sujet.",
+     "exemples": [
+      "Football et compétitions continentales"
+     ],
+     "contre_exemples": [],
+     "iptc": []
+    },
+    {
+     "id": "football.instances",
+     "nom": "Instances et arbitrage",
+     "definition": "Fédération (FECAFOOT), ligues, élections, sanctions, arbitrage, conflits entre instances.",
+     "exemples": [
+      "Bilan et réformes de la fédération"
+     ],
+     "contre_exemples": [
+      "Rencontre d'un ministre et de la fédération : reste ici, rubrique secondaire Sport > Politique sportive"
+     ],
+     "iptc": []
+    }
+   ]
+  },
+  {
+   "id": "sport",
+   "nom": "Sport",
+   "icone": "trophee",
+   "iptc": [
+    "medtop:15000000"
+   ],
+   "sous": [
+    {
+     "id": "sport.basket",
+     "nom": "Basket-ball",
+     "definition": "Basket-ball, championnats et sélections.",
+     "exemples": [],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000851"
+     ]
+    },
+    {
+     "id": "sport.athletisme",
+     "nom": "Athlétisme",
+     "definition": "Athlétisme, marathons, courses (dont la Course de l'Espoir au mont Cameroun).",
+     "exemples": [],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000827"
+     ]
+    },
+    {
+     "id": "sport.combat",
+     "nom": "Sports de combat",
+     "definition": "Boxe, lutte, MMA, judo, karaté, taekwondo.",
+     "exemples": [
+      "Combat de Francis Ngannou"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000856",
+      "medtop:20001098",
+      "medtop:20001231",
+      "medtop:20000969",
+      "medtop:20000983",
+      "medtop:20001157"
+     ]
+    },
+    {
+     "id": "sport.cyclisme",
+     "nom": "Cyclisme",
+     "definition": "Cyclisme (Tour du Cameroun…).",
+     "exemples": [],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000892"
+     ]
+    },
+    {
+     "id": "sport.autres",
+     "nom": "Autres sports",
+     "definition": "Tous les autres sports (handball, volley-ball, tennis, rugby…) et les grands événements multisports.",
+     "exemples": [
+      "Mobilisation sportive"
+     ],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20000822",
+      "medtop:20001108",
+      "medtop:20001126",
+      "medtop:20001148",
+      "medtop:20001301",
+      "medtop:20001323",
+      "medtop:20001103",
+      "medtop:20001104"
+     ]
+    },
+    {
+     "id": "sport.politique_sportive",
+     "nom": "Politique sportive",
+     "definition": "Ministère des sports, fédérations (hors football), financement, organisation des grands événements, dirigeants.",
+     "exemples": [],
+     "contre_exemples": [],
+     "iptc": [
+      "medtop:20001124",
+      "medtop:20001125",
+      "medtop:20001324",
+      "medtop:20001325"
+     ]
+    }
+   ]
+  }
+ ]
+}
